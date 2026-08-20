@@ -11,8 +11,15 @@
   --sheet:#EDE7D8;
   --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
 }
+@media (prefers-color-scheme: light){
+  :root{--ink:#F1F4F7;--panel:#FFFFFF;--panel2:#E8EDF2;--line:#D3DDE5;
+    --tx:#16202B;--mut:#5C6E80;--amber:#8A5A00;--green:#1F7A4C;--red:#B3261E;}
+  .lever-v,.bigopen{color:inherit}
+  .bigopen{background:#F5C242;color:#101720}
+  .total span{color:var(--amber)}
+}
 *{box-sizing:border-box}
-body{margin:0;background:var(--ink);color:var(--tx);
+body{margin:0;background:var(--ink);color:var(--tx);-webkit-text-size-adjust:100%;
   font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
   -webkit-font-smoothing:antialiased}
 .wrap{max-width:920px;margin:0 auto;padding:0 20px}
@@ -59,9 +66,10 @@ h2{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--ambe
 .total span{font-family:var(--mono);font-size:30px;color:var(--amber);font-weight:600}
 
 .hdr{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
-.open{color:var(--amber);text-decoration:none;font-size:13px;font-weight:600;
-  border:1px solid var(--line);border-radius:20px;padding:8px 16px;white-space:nowrap}
-.open:hover{border-color:var(--amber)}
+.nav{display:flex;gap:8px;flex-wrap:wrap}
+.nav a{color:var(--mut);text-decoration:none;font-size:13px;border:1px solid var(--line);
+  border-radius:20px;padding:8px 14px;white-space:nowrap}
+.nav a.on{color:var(--tx);border-color:var(--mut)}
 .nojs{background:rgba(245,194,66,.14);border-left:3px solid var(--amber);border-radius:8px;
   padding:14px 16px;margin:20px 0;font-size:14px;line-height:1.6}
 .nojs b{display:block;margin-bottom:4px}
@@ -117,7 +125,11 @@ footer{padding:34px 0 56px;color:var(--mut);font-size:11px}
     <div class="brand">LET 'EM RIDE AUTOS<i>INC</i></div>
     <div class="sub">Collections Desk · Cedar Hill, TX · What it's worth</div>
   </div>
-  <a class="open" href="./">Open the desk &rsaquo;</a>
+  <nav class="nav">
+    <a href="./">The desk</a>
+    <a class="on" href="./savings.html">The numbers</a>
+    <a href="./compare.html">Comparison</a>
+  </nav>
 </div></header>
 
 <noscript><div class="wrap"><div class="nojs">
@@ -344,6 +356,7 @@ footer{padding:34px 0 56px;color:var(--mut);font-size:11px}
   <h2>See it running</h2>
   <p class="lede">Six real accounts off the lot, loaded and working. Nothing on that screen can break anything.</p>
   <a class="bigopen" href="./">Open the collections desk &rsaquo;</a>
+  <p class="lede" style="margin-top:18px"><a href="./compare.html" style="color:var(--amber)">Feature and pricing comparison &rsaquo;</a></p>
 </div></section>
 
 <footer><div class="wrap">

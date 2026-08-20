@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#101720">
+<title>Collections Desk — specification and comparison</title>
+<style>
+:root{
+  --ink:#101720;--panel:#17202B;--panel2:#1D2833;--line:#25313F;
+  --tx:#ECF1F6;--mut:#8496A6;--amber:#F5C242;--green:#3FA96B;--red:#E1483C;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --shadow:0 4px 14px rgba(0,0,0,.3);
+}
+@media (prefers-color-scheme: light){
+  :root{--ink:#F1F4F7;--panel:#FFFFFF;--panel2:#E8EDF2;--line:#D3DDE5;
+    --tx:#16202B;--mut:#5C6E80;--amber:#8A5A00;--green:#1F7A4C;--red:#B3261E;
+    --shadow:0 4px 14px rgba(16,32,48,.12);}
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ink);color:var(--tx);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;-webkit-text-size-adjust:100%}
+.wrap{max-width:1000px;margin:0 auto;padding:0 20px}
+h1,h2,h3{margin:0}
+header{border-bottom:1px solid var(--line);padding:24px 0}
+.hdr{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.brand{font-size:14px;font-weight:800;letter-spacing:.16em}
+.brand i{font-style:normal;color:var(--amber);font-size:9px;margin-left:6px;letter-spacing:.2em;vertical-align:2px}
+.sub{font-size:10px;color:var(--mut);letter-spacing:.1em;text-transform:uppercase;margin-top:5px}
+.nav{display:flex;gap:8px;flex-wrap:wrap}
+.nav a{color:var(--mut);text-decoration:none;font-size:13px;border:1px solid var(--line);
+  border-radius:20px;padding:8px 14px;white-space:nowrap}
+.nav a.on{color:var(--tx);border-color:var(--mut)}
+section{padding:38px 0;border-bottom:1px solid var(--line)}
+h2{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--amber);margin-bottom:8px}
+.lede{color:var(--mut);font-size:14px;max-width:70ch;margin-bottom:20px}
+.intro h1{font-size:clamp(24px,4vw,34px);line-height:1.2;letter-spacing:-.02em;max-width:22ch}
+.intro p{color:var(--mut);max-width:68ch;margin-top:14px;font-size:15px}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{text-align:left;padding:9px 11px;border-bottom:1px solid var(--line);vertical-align:top}
+thead th{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--mut);
+  font-weight:700;white-space:nowrap;position:sticky;top:0;background:var(--ink)}
+td.n{font-family:var(--mono);white-space:nowrap}
+.us{background:rgba(245,194,66,.07)}
+th.us{color:var(--amber)}
+.y{color:var(--green);font-weight:700;text-align:center}
+.no{color:var(--mut);opacity:.5;text-align:center}
+.p{color:var(--amber);text-align:center}
+.grp td{background:var(--panel);font-size:9px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--mut);font-weight:700;padding:8px 11px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:16px}
+.card h3{font-size:14px;margin-bottom:4px}
+.card .amt{font-family:var(--mono);font-size:22px;margin:8px 0 4px}
+.card small{font-size:12px;color:var(--mut);display:block;line-height:1.5}
+.feat{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
+.f{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--amber);
+  border-radius:9px;padding:15px 17px}
+.f h3{font-size:14px;margin-bottom:6px}
+.f p{font-size:13px;color:var(--mut);margin:0}
+.f .why{font-size:12px;color:var(--mut);margin-top:8px;padding-top:8px;border-top:1px solid var(--line)}
+.plain{background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:18px}
+.plain ul{margin:0;padding-left:18px;font-size:14px;line-height:1.8;color:var(--mut)}
+.plain li{margin-bottom:6px}
+.plain b{color:var(--tx)}
+.notes{font-size:11.5px;color:var(--mut);line-height:1.7;padding-left:18px}
+.notes li{margin-bottom:7px}
+footer{padding:30px 0 50px;color:var(--mut);font-size:11.5px}
+@media(max-width:600px){ th,td{padding:8px 8px;font-size:12px} }
+</style>
+</head>
+<body>
+
+<header><div class="wrap hdr">
+  <div>
+    <div class="brand">LET 'EM RIDE AUTOS<i>INC</i></div>
+    <div class="sub">Collections Desk · specification</div>
+  </div>
+  <nav class="nav">
+    <a href="./">The desk</a>
+    <a href="./savings.html">The numbers</a>
+    <a class="on" href="./compare.html">Comparison</a>
+  </nav>
+</div></header>
+
+<section class="intro"><div class="wrap">
+  <h1>What it does, what it costs, and how that compares.</h1>
+  <p>
+    A specification rather than a pitch. Feature marks describe what each vendor documents publicly as of
+    August 2026; a dash means it isn't documented, not that it can't be done. Pricing is as advertised and
+    changes without notice. The last two sections list what this tool does not do, at the same length as
+    what it does.
+  </p>
+</div></section>
+
+<section><div class="wrap">
+  <h2>The systems being compared</h2>
+  <p class="lede">
+    Four of these are dealer management systems — complete platforms handling inventory, deal desking,
+    titles and accounting. This one is not a DMS. It is a collections tool that reads a CSV from whichever
+    DMS is already in place.
+  </p>
+  <div class="cards">
+    <div class="card">
+      <h3>This desk</h3><div class="amt" style="color:var(--green)">$0</div>
+      <small>Purpose-built collections tool. No inventory, deals, titles or accounting. Runs beside a DMS.
+      Single dealership, no license.</small>
+    </div>
+    <div class="card">
+      <h3>Frazer</h3><div class="amt">$50–99<span style="font-size:13px">/mo</span></div>
+      <small>Full DMS, in the market since 1985, 19,000+ dealers. Collections included in the BHPH module.</small>
+    </div>
+    <div class="card">
+      <h3>DealerCenter</h3><div class="amt">$60<span style="font-size:13px">/mo</span></div>
+      <small>Full DMS. QuickBooks connector is a separate $40/mo. One-time setup fee of $199.</small>
+    </div>
+    <div class="card">
+      <h3>Wayne Reaves</h3><div class="amt">$98<span style="font-size:13px">/mo</span></div>
+      <small>Browser-based DMS with compliance tooling included.</small>
+    </div>
+    <div class="card">
+      <h3>DealerSocket IDMS</h3><div class="amt">$179<span style="font-size:13px">/mo</span></div>
+      <small>Full DMS aimed at independents and BHPH. The most extensively documented collections module of
+      the group.</small>
+    </div>
+    <div class="card">
+      <h3>DealerClick</h3><div class="amt">quoted</div>
+      <small>DMS with a Texas-specific compliance engine: notice generation, Spanish translation, certified
+      mail tracking.</small>
+    </div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <h2>Feature comparison</h2>
+  <p class="lede">
+    <span class="y">✓</span> documented by the vendor &nbsp;·&nbsp;
+    <span class="p">~</span> partial, or through a paid add-on &nbsp;·&nbsp;
+    <span class="no">–</span> not documented publicly
+  </p>
+  <div class="scroll"><table>
+    <thead><tr>
+      <th>Capability</th><th class="us">This desk</th><th>Frazer</th><th>DealerCenter</th>
+      <th>Wayne&nbsp;Reaves</th><th>IDMS</th><th>DealerClick</th>
+    </tr></thead>
+    <tbody>
+      <tr class="grp"><td colspan="7">Dealer management — where this tool is not a competitor</td></tr>
+      <tr><td>Inventory management</td><td class="us no">–</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td></tr>
+      <tr><td>Deal desking and contracts</td><td class="us no">–</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td></tr>
+      <tr><td>Titles and registration</td><td class="us no">–</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td></tr>
+      <tr><td>Full accounting ledger</td><td class="us no">–</td><td class="y">✓</td><td class="p">~</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td></tr>
+      <tr><td>Credit bureau reporting</td><td class="us no">–</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td></tr>
+      <tr><td>Vendor support line</td><td class="us no">–</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td></tr>
+
+      <tr class="grp"><td colspan="7">Collections basics — everyone has these</td></tr>
+      <tr><td>Aging buckets, days past due</td><td class="us y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td></tr>
+      <tr><td>Payment posting and history</td><td class="us y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td></tr>
+      <tr><td>Promise-to-pay tracking</td><td class="us y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="p">~</td><td class="y">✓</td><td class="p">~</td></tr>
+      <tr><td>Contact / note log</td><td class="us y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td></tr>
+      <tr><td>Online customer payments</td><td class="us p">~</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td></tr>
+      <tr><td>Outbound text messaging</td><td class="us p">~</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td></tr>
+      <tr><td>GPS / starter interrupt</td><td class="us p">~</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td></tr>
+      <tr><td>QuickBooks export</td><td class="us y">✓</td><td class="y">✓</td><td class="p">~</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td></tr>
+
+      <tr class="grp"><td colspan="7">Portfolio measurement</td></tr>
+      <tr><td>Recency — share paid in last 30 days</td><td class="us y">✓</td><td class="no">–</td><td class="no">–</td><td class="no">–</td><td class="no">–</td><td class="no">–</td></tr>
+      <tr><td>Collection potential — collected vs. due</td><td class="us y">✓</td><td class="no">–</td><td class="no">–</td><td class="no">–</td><td class="no">–</td><td class="no">–</td></tr>
+      <tr><td>One-day-one-dollar delinquency</td><td class="us y">✓</td><td class="p">~</td><td class="p">~</td><td class="p">~</td><td class="p">~</td><td class="p">~</td></tr>
+      <tr><td>Dollar value of a point of recency</td><td class="us y">✓</td><td class="no">–</td><td class="no">–</td><td class="no">–</td><td class="no">–</td><td class="no">–</td></tr>
+      <tr><td>Collector scorecard: kept-promise, RPC</td><td class="us y">✓</td><td class="no">–</td><td class="no">–</td><td class="no">–</td><td class="p">~</td><td class="no">–</td></tr>
+
+      <tr class="grp"><td colspan="7">Simple-interest mechanics at the collector's desk</td></tr>
+      <tr><td>Accrued vs. earned interest per account</td><td class="us y">✓</td><td class="p">~</td><td class="no">–</td><td class="p">~</td><td class="p">~</td><td class="no">–</td></tr>
+      <tr><td>Per diem shown during the call</td><td class="us y">✓</td><td class="no">–</td><td class="no">–</td><td class="no">–</td><td class="no">–</td><td class="no">–</td></tr>
+      <tr><td>Days of interest a payment buys</td><td class="us y">✓</td><td class="no">–</td><td class="no">–</td><td class="no">–</td><td class="no">–</td><td class="no">–</td></tr>
+      <tr><td>Warning when a payment misses principal</td><td class="us y">✓</td><td class="no">–</td><td class="no">–</td><td class="no">–</td><td class="no">–</td><td class="no">–</td></tr>
+      <tr><td>Extension priced before it's granted</td><td class="us y">✓</td><td class="no">–</td><td class="no">–</td><td class="no">–</td><td class="no">–</td><td class="no">–</td></tr>
+      <tr><td>Portfolio accrued-vs-earned export for a CPA</td><td class="us y">✓</td><td class="p">~</td><td class="no">–</td><td class="p">~</td><td class="p">~</td><td class="no">–</td></tr>
+
+      <tr class="grp"><td colspan="7">Compliance</td></tr>
+      <tr><td>Call frequency cap enforced on the button</td><td class="us y">✓</td><td class="no">–</td><td class="no">–</td><td class="no">–</td><td class="no">–</td><td class="no">–</td></tr>
+      <tr><td>Contact-hours lockout</td><td class="us y">✓</td><td class="no">–</td><td class="no">–</td><td class="no">–</td><td class="no">–</td><td class="no">–</td></tr>
+      <tr><td>Texting consent with expiry</td><td class="us y">✓</td><td class="no">–</td><td class="no">–</td><td class="no">–</td><td class="no">–</td><td class="no">–</td></tr>
+      <tr><td>Opt-out and cease-contact honored automatically</td><td class="us y">✓</td><td class="p">~</td><td class="p">~</td><td class="p">~</td><td class="p">~</td><td class="p">~</td></tr>
+      <tr><td>Texas notice merge with cure-date math</td><td class="us y">✓</td><td class="p">~</td><td class="no">–</td><td class="p">~</td><td class="no">–</td><td class="y">✓</td></tr>
+      <tr><td>Certified mail tracking on the account</td><td class="us y">✓</td><td class="p">~</td><td class="no">–</td><td class="p">~</td><td class="no">–</td><td class="y">✓</td></tr>
+      <tr><td>One-click examination trail export</td><td class="us y">✓</td><td class="no">–</td><td class="no">–</td><td class="no">–</td><td class="no">–</td><td class="y">✓</td></tr>
+
+      <tr class="grp"><td colspan="7">Recovery, for a lot that owns its wrecker</td></tr>
+      <tr><td>Six-stage recovery pipeline with a clock</td><td class="us y">✓</td><td class="no">–</td><td class="no">–</td><td class="no">–</td><td class="no">–</td><td class="no">–</td></tr>
+      <tr><td>Decision-to-hooked measured per unit</td><td class="us y">✓</td><td class="no">–</td><td class="no">–</td><td class="no">–</td><td class="no">–</td><td class="no">–</td></tr>
+      <tr><td>Tow, recon and re-retail tracked on the note</td><td class="us y">✓</td><td class="no">–</td><td class="no">–</td><td class="no">–</td><td class="p">~</td><td class="no">–</td></tr>
+      <tr><td>Shortfall against re-retail, not auction</td><td class="us y">✓</td><td class="no">–</td><td class="no">–</td><td class="no">–</td><td class="no">–</td><td class="no">–</td></tr>
+      <tr><td>Skip checklist with GPS ping log</td><td class="us y">✓</td><td class="no">–</td><td class="p">~</td><td class="no">–</td><td class="p">~</td><td class="no">–</td></tr>
+
+      <tr class="grp"><td colspan="7">This lot's specifics</td></tr>
+      <tr><td>Bilingual scripts written, not translated</td><td class="us y">✓</td><td class="no">–</td><td class="no">–</td><td class="no">–</td><td class="no">–</td><td class="p">~</td></tr>
+      <tr><td>Message selected by the account's stage</td><td class="us y">✓</td><td class="no">–</td><td class="no">–</td><td class="no">–</td><td class="no">–</td><td class="no">–</td></tr>
+      <tr><td>Bilingual two-copy window receipt</td><td class="us y">✓</td><td class="p">~</td><td class="p">~</td><td class="p">~</td><td class="p">~</td><td class="p">~</td></tr>
+      <tr><td>Deposit batch by cash / card / online</td><td class="us y">✓</td><td class="p">~</td><td class="p">~</td><td class="p">~</td><td class="p">~</td><td class="no">–</td></tr>
+      <tr><td>Light and dark, following the device</td><td class="us y">✓</td><td class="no">–</td><td class="no">–</td><td class="no">–</td><td class="no">–</td><td class="no">–</td></tr>
+    </tbody>
+  </table></div>
+</div></section>
+
+<section><div class="wrap">
+  <h2>Features, and what each one is for</h2>
+  <p class="lede">Twelve capabilities that don't appear in the systems above, and the reason each exists.</p>
+  <div class="feat">
+    <div class="f"><h3>Recency as the headline number</h3>
+      <p>Share of open accounts that paid anything in the last 30 days, measured against a target.</p>
+      <div class="why">Aging buckets are a lender's metric. BHPH portfolios are managed on recency, and the
+      industry target sits in the low-to-mid 90s.</div></div>
+
+    <div class="f"><h3>Collection potential</h3>
+      <p>Dollars collected in a period against dollars contractually due. Above 100% means catch-up money
+      is arriving on top of scheduled payments.</p>
+      <div class="why">It is the measure of the payment window itself, not of individual accounts.</div></div>
+
+    <div class="f"><h3>Per diem during the call</h3>
+      <p>Daily interest on the account, and how many days of interest a given payment covers.</p>
+      <div class="why">Other systems show interest and principal in the payment history — after the fact.
+      This puts it in front of the collector while the customer is still on the line.</div></div>
+
+    <div class="f"><h3>Payment-misses-principal warning</h3>
+      <p>Flags any payment that goes entirely to interest and fees, and states the smallest amount that
+      would reduce the balance.</p>
+      <div class="why">On a simple-interest note a chronically late customer can pay for a year without the
+      balance moving. Neither party usually notices.</div></div>
+
+    <div class="f"><h3>Extension priced before it's granted</h3>
+      <p>Shows the accrued interest an extension adds and the new payoff, with an approver and a
+      per-contract limit.</p>
+      <div class="why">An extension buys time, not money. The number makes that concrete for both sides.</div></div>
+
+    <div class="f"><h3>Collector scorecard</h3>
+      <p>Kept-promise rate, right-party contact rate, recency within each collector's own accounts, cash
+      collected per account.</p>
+      <div class="why">These are the measures BHPH collector compensation is typically written against.</div></div>
+
+    <div class="f"><h3>Enforced contact limits</h3>
+      <p>Call frequency cap, contact-hours lockout, texting consent with an expiry, opt-out and
+      cease-contact. The buttons stop working and state the reason.</p>
+      <div class="why">Every limit is a setting the dealership's attorney provides. The software enforces;
+      it does not interpret.</div></div>
+
+    <div class="f"><h3>Notice merge</h3>
+      <p>Merges account data into attorney-supplied notice text, computes the cure date, records certified
+      mail tracking, and prints.</p>
+      <div class="why">Merging a name and a date into approved text is clerical. Drafting the text is not,
+      and the software does not attempt it.</div></div>
+
+    <div class="f"><h3>Examination trail</h3>
+      <p>Every contact, promise, payment, notice and consent event exported as one chronological file.</p>
+      <div class="why">Texas requires records held until the later of four years from the transaction or two
+      years from the last entry.</div></div>
+
+    <div class="f"><h3>Recovery pipeline</h3>
+      <p>Six stages from decision to resale, with tow cost, recon, asking price and the new down payment
+      recorded against the original note.</p>
+      <div class="why">A lot that owns its wrecker and re-retails its own units is not writing off a
+      repossession — it is moving inventory. The shortfall is measured against re-retail, not auction.</div></div>
+
+    <div class="f"><h3>Bilingual scripts</h3>
+      <p>Ten texts and four call scripts written in both languages, auto-selected by how late the account
+      is, and refused outright when the account can't be texted.</p>
+      <div class="why">Most of this lot's customers are Spanish-speaking. The Spanish is written, not
+      machine-translated from the English.</div></div>
+
+    <div class="f"><h3>Window receipt</h3>
+      <p>Two bilingual copies on one page, printed at the counter or reprinted later from any past payment.</p>
+      <div class="why">Cash crosses the counter here. A customer with nothing in her hand cannot prove she
+      paid, and the lot has no signed record that she did.</div></div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <h2>What this tool does not do</h2>
+  <p class="lede">Stated plainly, because a comparison that only lists strengths isn't a comparison.</p>
+  <div class="plain"><ul>
+    <li><b>It is not a dealer management system.</b> No inventory, deal desking, titles, forms, or general
+      ledger. It reads a CSV from whatever DMS is in place and writes one back.</li>
+    <li><b>Nothing synchronises.</b> Aging comes in by file, the board goes out by file, and payments are
+      entered twice — here and in the DMS.</li>
+    <li><b>Data is per-device.</b> Records live in the browser on one phone or tablet. A second collector on
+      a second device sees a separate board. Sharing one board requires a server, logins and a database.</li>
+    <li><b>It does not send texts or take payments itself.</b> It composes the message and supplies the
+      payment link; the phone sends and the processor collects.</li>
+    <li><b>It does not write legal language</b> and does not generate post-repossession notices.</li>
+    <li><b>It does not report to credit bureaus.</b></li>
+    <li><b>There is no support line.</b> The vendors above answer the phone during business hours. This has
+      no equivalent, and for a lot that depends on its DMS that difference is worth real money.</li>
+  </ul></div>
+</div></section>
+
+<section><div class="wrap">
+  <h2>Method and sources</h2>
+  <ol class="notes">
+    <li>Feature marks reflect vendor documentation, published support material and software directories as of
+      August 2026. A dash indicates the capability is not documented publicly. Several dealerships build
+      these measures manually in spreadsheets; absence of a marked feature is not absence of the practice.</li>
+    <li>Pricing is as advertised in 2025–26 software directories and is subject to change. Confirm current
+      pricing directly with each vendor before relying on any figure here.</li>
+    <li>Recency targets and the collected-vs-due framing come from BHPH portfolio management guidance
+      published in the trade press.</li>
+    <li>Recovery economics are modelled on re-retail rather than auction disposition, which is appropriate
+      for a dealership that recovers and reconditions its own units and inappropriate for one that does not.</li>
+    <li>Compliance features enforce limits supplied by the dealership's counsel. Nothing in this document is
+      legal advice.</li>
+    <li>This tool was built for a single dealership and is not sold. The $0 figure reflects that, not a
+      market price.</li>
+  </ol>
+</div></section>
+
+<footer><div class="wrap">
+  Let 'Em Ride Autos Inc. · 1507 S Hwy 67, Cedar Hill, TX 75104 · (972) 293-1833<br>
+  Collections Desk v5.4 · specification current as of August 20, 2026
+</div></footer>
+
+</body>
+</html>
