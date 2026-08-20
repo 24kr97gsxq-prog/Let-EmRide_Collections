@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Collections Desk — what it's worth to Let 'Em Ride</title>
+<style>
+:root{
+  --ink:#101720; --panel:#17202B; --panel2:#1D2833; --line:#25313F;
+  --tx:#ECF1F6; --mut:#8496A6; --amber:#F5C242; --green:#3FA96B; --red:#E1483C;
+  --sheet:#EDE7D8;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ink);color:var(--tx);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased}
+.wrap{max-width:920px;margin:0 auto;padding:0 20px}
+h1,h2,h3{margin:0}
+.mono{font-family:var(--mono)}
+
+header{border-bottom:1px solid var(--line);padding:26px 0}
+.brand{font-size:14px;font-weight:800;letter-spacing:.16em}
+.brand i{font-style:normal;color:var(--amber);font-size:9px;margin-left:6px;letter-spacing:.2em;vertical-align:2px}
+.sub{font-size:10px;color:var(--mut);letter-spacing:.1em;text-transform:uppercase;margin-top:5px}
+
+.hero{padding:52px 0 40px;border-bottom:1px solid var(--line)}
+.eyebrow{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);margin-bottom:14px}
+.hero h1{font-size:clamp(28px,5vw,44px);line-height:1.15;letter-spacing:-.02em;max-width:16ch}
+.hero p{color:var(--mut);max-width:60ch;margin-top:16px;font-size:15px}
+.headline{font-family:var(--mono);font-size:clamp(48px,11vw,86px);line-height:1;
+  color:var(--green);font-weight:600;margin:28px 0 6px;letter-spacing:-.03em}
+.headline-n{font-size:12px;color:var(--mut)}
+
+section{padding:44px 0;border-bottom:1px solid var(--line)}
+h2{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--amber);margin-bottom:8px}
+.lede{color:var(--mut);font-size:14px;max-width:62ch;margin-bottom:24px}
+
+.calc{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px}
+.f{display:flex;flex-direction:column;gap:6px}
+.f label{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--mut)}
+.f input{background:var(--ink);border:1px solid var(--line);color:var(--tx);border-radius:7px;
+  padding:11px;font-size:17px;font-family:var(--mono);width:100%}
+.f input:focus{outline:2px solid var(--amber);outline-offset:1px}
+.f small{font-size:10px;color:var(--mut)}
+
+.levers{display:grid;gap:12px;margin-top:26px}
+.lever{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--green);
+  border-radius:9px;padding:16px 18px}
+.lever-top{display:flex;justify-content:space-between;align-items:baseline;gap:14px;flex-wrap:wrap}
+.lever h3{font-size:15px}
+.lever-v{font-family:var(--mono);font-size:24px;color:var(--green);font-weight:600;white-space:nowrap}
+.lever p{font-size:13px;color:var(--mut);margin:8px 0 0}
+.lever .math{font-family:var(--mono);font-size:11px;color:var(--mut);margin-top:8px;
+  padding-top:8px;border-top:1px solid var(--line)}
+.total{background:var(--panel2);border:1px solid var(--amber);border-radius:9px;padding:18px;
+  display:flex;justify-content:space-between;align-items:baseline;gap:14px;flex-wrap:wrap;margin-top:12px}
+.total b{font-size:14px;letter-spacing:.06em;text-transform:uppercase}
+.total span{font-family:var(--mono);font-size:30px;color:var(--amber);font-weight:600}
+
+table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--mut);font-weight:700;
+  white-space:nowrap;position:sticky;top:0;background:var(--ink)}
+td.n{font-family:var(--mono);white-space:nowrap}
+.us{background:rgba(245,194,66,.07)}
+th.us{color:var(--amber)}
+.y{color:var(--green);font-weight:700}
+.n-{color:#4E5D6C}
+.p{color:var(--amber)}
+tbody tr:hover{background:rgba(132,150,166,.05)}
+.grp td{background:var(--panel);font-size:9px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--mut);font-weight:700;padding:8px 12px}
+
+.price{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:6px}
+.pcard{background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:16px}
+.pcard.free{border-color:var(--green)}
+.pcard h3{font-size:14px}
+.pcard .amt{font-family:var(--mono);font-size:24px;margin:8px 0 2px}
+.pcard.free .amt{color:var(--green)}
+.pcard small{font-size:11px;color:var(--mut);display:block;line-height:1.5}
+
+.honest{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--mut);
+  border-radius:9px;padding:18px}
+.honest ul{margin:10px 0 0;padding-left:18px;font-size:14px;color:var(--mut);line-height:1.75}
+.honest li{margin-bottom:4px}
+.honest b{color:var(--tx)}
+
+.notes{font-size:11px;color:var(--mut);line-height:1.7}
+.notes li{margin-bottom:7px}
+footer{padding:34px 0 56px;color:var(--mut);font-size:11px}
+.stamp{font-family:var(--mono)}
+@media print{body{background:#fff;color:#000}.calc,.f input{display:none}}
+</style>
+</head>
+<body>
+
+<header><div class="wrap">
+  <div class="brand">LET 'EM RIDE AUTOS<i>INC</i></div>
+  <div class="sub">Collections Desk · Cedar Hill, TX · What it's worth</div>
+</div></header>
+
+<div class="hero"><div class="wrap">
+  <div class="eyebrow">The number</div>
+  <h1>Money already earned, sitting uncollected.</h1>
+  <div class="headline" id="total">$0</div>
+  <div class="headline-n">a year, on the numbers below. Change them and this changes.<br>
+    Gross cash flow across four levers — a ceiling to work toward, not a number to bank.</div>
+  <p>
+    Nothing here comes from selling more cars. It comes from four things a collections desk can move:
+    getting more customers to pay something each month, keeping a payment from being all interest,
+    preventing a few charge-offs, and not writing a check over a compliance mistake.
+  </p>
+</div></div>
+
+<section><div class="wrap">
+  <h2>Your numbers</h2>
+  <p class="lede">Start with the four you know. Everything downstream recalculates as you type.</p>
+  <div class="calc">
+    <div class="f"><label>Active accounts</label><input id="accounts" type="number" value="250">
+      <small>open notes on the book</small></div>
+    <div class="f"><label>Bi-weekly payment</label><input id="payment" type="number" value="295">
+      <small>the average one</small></div>
+    <div class="f"><label>Recency today %</label><input id="recency" type="number" value="83">
+      <small>paid something in 30 days</small></div>
+    <div class="f"><label>Recency target %</label><input id="target" type="number" value="92">
+      <small>industry range is low-to-mid 90s</small></div>
+    <div class="f"><label>Average balance</label><input id="balance" type="number" value="9500">
+      <small>principal on a typical note</small></div>
+    <div class="f"><label>Repos per month</label><input id="repos" type="number" value="9">
+      <small>units taken back</small></div>
+    <div class="f"><label>Charge-offs prevented</label><input id="saved" type="number" value="1">
+      <small>per month, conservatively</small></div>
+    <div class="f"><label>Auction recovery %</label><input id="recovery" type="number" value="30">
+      <small>cents on the dollar at sale</small></div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <h2>Where it comes from</h2>
+  <p class="lede">Four levers, each with the arithmetic showing. No black box.</p>
+  <div class="levers">
+
+    <div class="lever">
+      <div class="lever-top"><h3>1 · Recency lift</h3><div class="lever-v" id="l1">$0</div></div>
+      <p>Every point of recency is one percent of the book paying one more month. This is the biggest
+         lever on the page and the one the desk works on directly — the Pulse screen lists exactly which
+         accounts haven't paid in 30 days, sorted, every morning.
+         <b style="color:var(--tx)">Read this one as gross cash flow, not profit</b> — some of these
+         accounts would have paid eventually on their own, and some were going to charge off no matter
+         who called. It is the ceiling on the lever, not a promise.</p>
+      <div class="math" id="m1"></div>
+    </div>
+
+    <div class="lever">
+      <div class="lever-top"><h3>2 · Payments that reach principal</h3><div class="lever-v" id="l2">$0</div></div>
+      <p>On a simple-interest note, a late payment can be all interest and no principal. The customer pays,
+         the balance doesn't move, and the note runs longer than the car lasts. The desk flags it mid-call
+         and tells the collector the smallest amount that actually reduces the balance.</p>
+      <div class="math" id="m2"></div>
+    </div>
+
+    <div class="lever">
+      <div class="lever-top"><h3>3 · Charge-offs prevented</h3><div class="lever-v" id="l3">$0</div></div>
+      <p>Recovery in early-stage collections runs far higher than late-stage — the industry figure is
+         roughly 85% early against 11% past 180 days. Working accounts sooner is the whole game. One
+         prevented charge-off a month pays for a lot.</p>
+      <div class="math" id="m3"></div>
+    </div>
+
+    <div class="lever">
+      <div class="lever-top"><h3>4 · Compliance exposure avoided</h3><div class="lever-v" id="l4">$0</div></div>
+      <p>TCPA damages run $500–$1,500 <em>per message</em>, and they multiply. The desk blocks a text to
+         anyone who opted out or whose consent went stale, blocks calls past the frequency cap, and locks
+         out contact after office hours. One avoided incident, spread across a year.</p>
+      <div class="math" id="m4"></div>
+    </div>
+
+  </div>
+  <div class="total"><b>Total, per year</b><span id="total2">$0</span></div>
+</div></section>
+
+<section><div class="wrap">
+  <h2>What it costs, next to what else costs</h2>
+  <p class="lede">Published pricing, as advertised. These are dealer management systems — full platforms
+     that run inventory, deals and accounting. This desk is not one of those. It sits beside whichever
+     one the lot already pays for.</p>
+  <div class="price">
+    <div class="pcard free"><h3>This desk</h3><div class="amt">$0</div>
+      <small>Built for the lot. No license, no seats, no per-account fee. Runs beside the DMS.</small></div>
+    <div class="pcard"><h3>Frazer</h3><div class="amt">$50–99<span style="font-size:13px">/mo</span></div>
+      <small>BHPH module on top of the base DMS. 19,000+ dealers.</small></div>
+    <div class="pcard"><h3>DealerCenter</h3><div class="amt">$60<span style="font-size:13px">/mo</span></div>
+      <small>Plus $40/mo for QuickBooks and a $199 setup fee.</small></div>
+    <div class="pcard"><h3>Wayne Reaves</h3><div class="amt">$98<span style="font-size:13px">/mo</span></div>
+      <small>Browser-based, compliance tools included.</small></div>
+    <div class="pcard"><h3>DealerSocket IDMS</h3><div class="amt">$179<span style="font-size:13px">/mo</span></div>
+      <small>Strongest documented collections module of the group.</small></div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <h2>Feature by feature</h2>
+  <p class="lede">
+    <span class="y">✓</span> documented in the vendor's own materials ·
+    <span class="p">~</span> partial or through a paid add-on ·
+    <span class="n-">—</span> not documented publicly. A dash means nobody advertises it, not that it
+    can't be done — several shops build these by hand in spreadsheets.
+  </p>
+  <div class="scroll"><table>
+    <thead><tr>
+      <th>Capability</th><th class="us">This desk</th><th>Frazer</th><th>DealerCenter</th>
+      <th>IDMS</th><th>DealerClick</th>
+    </tr></thead>
+    <tbody>
+      <tr class="grp"><td colspan="6">The basics every system has</td></tr>
+      <tr><td>Aging buckets and days past due</td><td class="us y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td></tr>
+      <tr><td>Payment posting and history</td><td class="us y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td></tr>
+      <tr><td>Online customer payments</td><td class="us p">~</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td></tr>
+      <tr><td>Text messaging to customers</td><td class="us p">~</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td></tr>
+      <tr><td>GPS / starter interrupt</td><td class="us p">~</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td></tr>
+      <tr><td>QuickBooks</td><td class="us y">✓</td><td class="y">✓</td><td class="p">~</td><td class="y">✓</td><td class="y">✓</td></tr>
+
+      <tr class="grp"><td colspan="6">Running the book the way BHPH actually measures it</td></tr>
+      <tr><td>Recency as the headline metric</td><td class="us y">✓</td><td class="n-">—</td><td class="n-">—</td><td class="n-">—</td><td class="n-">—</td></tr>
+      <tr><td>Collection potential — collected vs. due</td><td class="us y">✓</td><td class="n-">—</td><td class="n-">—</td><td class="n-">—</td><td class="n-">—</td></tr>
+      <tr><td>What a point of recency is worth, in dollars</td><td class="us y">✓</td><td class="n-">—</td><td class="n-">—</td><td class="n-">—</td><td class="n-">—</td></tr>
+      <tr><td>Collector scorecard: kept-promise, RPC, recency</td><td class="us y">✓</td><td class="n-">—</td><td class="n-">—</td><td class="p">~</td><td class="n-">—</td></tr>
+
+      <tr class="grp"><td colspan="6">Simple interest, where the money actually is</td></tr>
+      <tr><td>Accrued vs. earned interest, per account</td><td class="us y">✓</td><td class="p">~</td><td class="n-">—</td><td class="p">~</td><td class="n-">—</td></tr>
+      <tr><td>Per diem in front of the collector mid-call</td><td class="us y">✓</td><td class="n-">—</td><td class="n-">—</td><td class="n-">—</td><td class="n-">—</td></tr>
+      <tr><td>"This payment buys 26 days of interest"</td><td class="us y">✓</td><td class="n-">—</td><td class="n-">—</td><td class="n-">—</td><td class="n-">—</td></tr>
+      <tr><td>Warns when a payment won't touch principal</td><td class="us y">✓</td><td class="n-">—</td><td class="n-">—</td><td class="n-">—</td><td class="n-">—</td></tr>
+      <tr><td>Extension shows its own cost before you grant it</td><td class="us y">✓</td><td class="n-">—</td><td class="n-">—</td><td class="n-">—</td><td class="n-">—</td></tr>
+
+      <tr class="grp"><td colspan="6">Compliance that stops you, not compliance that reminds you</td></tr>
+      <tr><td>Call frequency cap enforced on the button</td><td class="us y">✓</td><td class="n-">—</td><td class="n-">—</td><td class="n-">—</td><td class="n-">—</td></tr>
+      <tr><td>Contact-hours lockout</td><td class="us y">✓</td><td class="n-">—</td><td class="n-">—</td><td class="n-">—</td><td class="n-">—</td></tr>
+      <tr><td>Texting consent with a renewal window</td><td class="us y">✓</td><td class="n-">—</td><td class="n-">—</td><td class="n-">—</td><td class="n-">—</td></tr>
+      <tr><td>Opt-out and cease-contact honored automatically</td><td class="us y">✓</td><td class="p">~</td><td class="p">~</td><td class="p">~</td><td class="p">~</td></tr>
+      <tr><td>Texas notice merge with cure math</td><td class="us y">✓</td><td class="p">~</td><td class="n-">—</td><td class="n-">—</td><td class="y">✓</td></tr>
+      <tr><td>Certified mail tracking on the file</td><td class="us y">✓</td><td class="p">~</td><td class="n-">—</td><td class="n-">—</td><td class="y">✓</td></tr>
+      <tr><td>One-click examination trail export</td><td class="us y">✓</td><td class="n-">—</td><td class="n-">—</td><td class="n-">—</td><td class="y">✓</td></tr>
+
+      <tr class="grp"><td colspan="6">The lot's own shape</td></tr>
+      <tr><td>Bilingual scripts written, not translated</td><td class="us y">✓</td><td class="n-">—</td><td class="n-">—</td><td class="n-">—</td><td class="p">~</td></tr>
+      <tr><td>Message picks itself by how late the account is</td><td class="us y">✓</td><td class="n-">—</td><td class="n-">—</td><td class="n-">—</td><td class="n-">—</td></tr>
+      <tr><td>30-day skip checklist with GPS ping log</td><td class="us y">✓</td><td class="n-">—</td><td class="p">~</td><td class="p">~</td><td class="n-">—</td></tr>
+      <tr><td>Deposit batch by cash / card / online</td><td class="us y">✓</td><td class="p">~</td><td class="p">~</td><td class="p">~</td><td class="n-">—</td></tr>
+    </tbody>
+  </table></div>
+</div></section>
+
+<section><div class="wrap">
+  <h2>What it doesn't do</h2>
+  <p class="lede">The part nobody puts on a comparison chart. Read this before deciding anything.</p>
+  <div class="honest">
+    <ul>
+      <li><b>It isn't a DMS.</b> No inventory, no deal desking, no title work, no forms. The DMS stays the book of record.</li>
+      <li><b>It doesn't sync with anything.</b> Aging comes in by CSV and goes back out by CSV. Payments get posted twice — here and in the DMS.</li>
+      <li><b>Data lives on one device.</b> What Maricela enters doesn't appear on the other collector's phone. One shared board needs a server.</li>
+      <li><b>It can't send a text or take a payment itself.</b> It writes the message and hands you the link. Your phone sends it; Authorize.net takes the money.</li>
+      <li><b>It doesn't write legal language.</b> Your attorney's notice goes in once and the app merges names and dates into it. That division is deliberate.</li>
+      <li><b>Nobody supports it but us.</b> Frazer answers the phone at 8am. That is worth real money and this has no equivalent.</li>
+    </ul>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <h2>Where the figures come from</h2>
+  <ol class="notes">
+    <li>Recency target of low-to-mid 90s and the collected-vs-due framing: BHPH portfolio management guidance published in Auto Finance News.</li>
+    <li>Early vs. late-stage recovery (roughly 85% early, 11% past 180 days): ACA International industry data.</li>
+    <li>Auction recovery near 30 cents on the dollar: Recovery Database Network, Q3 2025, via defi SOLUTIONS.</li>
+    <li>TCPA damages of $500–$1,500 per message: statutory range widely reported in collections compliance guidance.</li>
+    <li>Competitor pricing as publicly advertised in 2025–26 software directories. Prices change; confirm before comparing.</li>
+    <li>Feature marks reflect what each vendor documents publicly as of August 2026. Absence of documentation isn't proof of absence.</li>
+  </ol>
+</div></section>
+
+<footer><div class="wrap">
+  Built for Let 'Em Ride Autos Inc. · 1507 S Hwy 67, Cedar Hill, TX 75104 · (972) 293-1833<br>
+  <span class="stamp" id="stamp"></span> · This is a working model, not a guarantee. Nothing here is legal,
+  tax or accounting advice.
+</div></footer>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const usd = (n) => "$" + Math.round(n).toLocaleString("en-US");
+const IN = ["accounts","payment","recency","target","balance","repos","saved","recovery"];
+const val = (id) => Number($(id).value) || 0;
+
+function run(){
+  const accounts = val("accounts"), payment = val("payment");
+  const rec = val("recency"), target = val("target");
+  const balance = val("balance"), repos = val("repos"), saved = val("saved");
+  const recovery = val("recovery") / 100;
+
+  // 1 — recency. A bi-weekly payment is roughly 30/14 of a payment per month.
+  const monthly = payment * (30 / 14);
+  const perPoint = (accounts * monthly * 12) / 100;
+  const points = Math.max(0, target - rec);
+  const l1 = perPoint * points;
+  $("m1").textContent =
+    accounts + " accounts × " + usd(monthly) + "/mo × 12 = " + usd(accounts * monthly * 12) +
+    " a year at full pay.  1 point = " + usd(perPoint) + ".  " + points.toFixed(1) + " points = " + usd(l1) + ".";
+
+  // 2 — interest bleed. Assume the desk moves 1 in 12 chronically-late accounts
+  // per year from all-interest payments to payments that reduce principal.
+  const lateShare = Math.min(1, Math.max(0, (100 - rec) / 100));
+  const bleeding = accounts * lateShare * 0.25;
+  const perDiem = balance * 0.219 / 365;
+  const bled = bleeding * perDiem * 365;
+  const l2 = bled * 0.33;
+  $("m2").textContent =
+    Math.round(bleeding) + " accounts riding all-interest × " + usd(perDiem) + "/day × 365 = " +
+    usd(bled) + " charged and uncollected a year.  Assume the desk recovers a third: " + usd(l2) + ".";
+
+  // 3 — charge-offs prevented, net of what the unit brings at auction.
+  const netLoss = balance * (1 - recovery);
+  const l3 = saved * 12 * netLoss;
+  $("m3").textContent =
+    usd(balance) + " balance − " + Math.round(recovery * 100) + "% recovery = " + usd(netLoss) +
+    " net loss each.  " + saved + "/month × 12 = " + usd(l3) + ".";
+
+  // 4 — one avoided TCPA incident. Deliberately modest: 20 messages at the
+  // low end of the statutory range, once a year.
+  const l4 = 20 * 500;
+  $("m4").textContent =
+    "20 messages × $500 minimum statutory damages = " + usd(l4) +
+    ". A single class-action letter costs multiples of this in fees alone.";
+
+  $("l1").textContent = usd(l1);
+  $("l2").textContent = usd(l2);
+  $("l3").textContent = usd(l3);
+  $("l4").textContent = usd(l4);
+  const t = l1 + l2 + l3 + l4;
+  $("total").textContent = usd(t);
+  $("total2").textContent = usd(t);
+}
+IN.forEach((id) => $(id).addEventListener("input", run));
+$("stamp").textContent = "Model v5.0 · " + new Date().toLocaleDateString("en-US",
+  { month:"long", day:"numeric", year:"numeric" });
+run();
+</script>
+</body>
+</html>
