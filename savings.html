@@ -58,6 +58,17 @@ h2{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--ambe
 .total b{font-size:14px;letter-spacing:.06em;text-transform:uppercase}
 .total span{font-family:var(--mono);font-size:30px;color:var(--amber);font-weight:600}
 
+.hdr{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.open{color:var(--amber);text-decoration:none;font-size:13px;font-weight:600;
+  border:1px solid var(--line);border-radius:20px;padding:8px 16px;white-space:nowrap}
+.open:hover{border-color:var(--amber)}
+.nojs{background:rgba(245,194,66,.14);border-left:3px solid var(--amber);border-radius:8px;
+  padding:14px 16px;margin:20px 0;font-size:14px;line-height:1.6}
+.nojs b{display:block;margin-bottom:4px}
+.cta{text-align:center;padding:10px 0}
+.cta .lede{margin-left:auto;margin-right:auto}
+.bigopen{display:inline-block;background:var(--amber);color:#101720;text-decoration:none;
+  font-weight:700;font-size:15px;padding:14px 28px;border-radius:9px}
 .notmine{background:var(--panel);border:1px dashed var(--line);border-radius:9px;padding:18px;margin-top:22px}
 .notmine h3{font-size:13px;color:var(--mut);margin-bottom:10px}
 .nm-v{font-family:var(--mono);font-size:26px;color:var(--mut);font-weight:600}
@@ -101,17 +112,26 @@ footer{padding:34px 0 56px;color:var(--mut);font-size:11px}
 </head>
 <body>
 
-<header><div class="wrap">
-  <div class="brand">LET 'EM RIDE AUTOS<i>INC</i></div>
-  <div class="sub">Collections Desk · Cedar Hill, TX · What it's worth</div>
+<header><div class="wrap hdr">
+  <div>
+    <div class="brand">LET 'EM RIDE AUTOS<i>INC</i></div>
+    <div class="sub">Collections Desk · Cedar Hill, TX · What it's worth</div>
+  </div>
+  <a class="open" href="./">Open the desk &rsaquo;</a>
 </div></header>
+
+<noscript><div class="wrap"><div class="nojs">
+  <b>This page needs JavaScript to run the numbers.</b>
+  You're most likely previewing the file rather than opening it. Open it in Safari or Chrome —
+  or just visit the live page — and every figure below calculates as you type.
+</div></div></noscript>
 
 <div class="hero"><div class="wrap">
   <div class="eyebrow">The number</div>
   <h1>Money already earned, sitting uncollected.</h1>
-  <div class="headline" id="total">$0</div>
+  <div class="headline" id="total">&mdash;</div>
   <div class="headline-n">a year, on the numbers below. Change them and this changes.<br>
-    Gross cash flow across four levers — a ceiling to work toward, not a number to bank.</div>
+    Gross cash flow across five levers — a ceiling to work toward, not a number to bank.</div>
   <p>
     Nothing here comes from selling more cars. It comes from five things a collections desk can move: getting
     more customers to pay something each month, keeping a payment from being all interest, avoiding a few
@@ -125,7 +145,7 @@ footer{padding:34px 0 56px;color:var(--mut);font-size:11px}
   <h2>Your numbers</h2>
   <p class="lede">Start with the four you know. Everything downstream recalculates as you type.</p>
   <div class="calc">
-    <div class="f"><label>Active accounts</label><input id="accounts" type="number" value="250">
+    <div class="f"><label>Active accounts</label><input id="accounts" type="number" value="300">
       <small>open notes on the book</small></div>
     <div class="f"><label>Bi-weekly payment</label><input id="payment" type="number" value="295">
       <small>the average one</small></div>
@@ -205,7 +225,7 @@ footer{padding:34px 0 56px;color:var(--mut);font-size:11px}
     </div>
 
   </div>
-  <div class="total"><b>Total, per year</b><span id="total2">$0</span></div>
+  <div class="total"><b>Total, per year</b><span id="total2">&mdash;</span></div>
 
   <div class="notmine">
     <h3>What the wrecker is already worth — and this app has nothing to do with it</h3>
@@ -318,6 +338,12 @@ footer{padding:34px 0 56px;color:var(--mut);font-size:11px}
     <li>Competitor pricing as publicly advertised in 2025–26 software directories. Prices change; confirm before comparing.</li>
     <li>Feature marks reflect what each vendor documents publicly as of August 2026. Absence of documentation isn't proof of absence.</li>
   </ol>
+</div></section>
+
+<section><div class="wrap cta">
+  <h2>See it running</h2>
+  <p class="lede">Six real accounts off the lot, loaded and working. Nothing on that screen can break anything.</p>
+  <a class="bigopen" href="./">Open the collections desk &rsaquo;</a>
 </div></section>
 
 <footer><div class="wrap">
