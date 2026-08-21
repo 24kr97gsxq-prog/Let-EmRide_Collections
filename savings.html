@@ -331,8 +331,9 @@ footer{padding:34px 0 56px;color:var(--mut);font-size:11px}
     <ul>
       <li><b>It isn't a DMS.</b> No inventory, no deal desking, no title work, no forms. The DMS stays the book of record.</li>
       <li><b>It doesn't sync with anything.</b> Aging comes in by CSV and goes back out by CSV. Payments get posted twice — here and in the DMS.</li>
-      <li><b>Data lives on one device.</b> What Maricela enters doesn't appear on the other collector's phone. One shared board needs a server.</li>
-      <li><b>It can't send a text or take a payment itself.</b> It writes the message and hands you the link. Your phone sends it; Authorize.net takes the money.</li>
+      <li><b>Cards are never typed into this app.</b> Authorize.net hosts the form; the desk only learns a payment settled. That keeps the lot out of PCI scope and is not going to change.</li>
+      <li><b>Online payments are recorded, not auto-applied.</b> They land on the call board and someone taps once. A replayed webhook shouldn't move a balance on its own.</li>
+      <li><b>Nothing here reports to credit bureaus yet.</b> The data exists; the file format needs the real spec and bureau certification before it touches anyone's credit.</li>
       <li><b>It doesn't write legal language.</b> Your attorney's notice goes in once and the app merges names and dates into it. That division is deliberate.</li>
       <li><b>Nobody supports it but us.</b> Frazer answers the phone at 8am. That is worth real money and this has no equivalent.</li>
     </ul>

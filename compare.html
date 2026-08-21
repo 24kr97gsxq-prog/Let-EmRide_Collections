@@ -94,6 +94,11 @@ footer{padding:30px 0 50px;color:var(--mut);font-size:11.5px}
     changes without notice. The last two sections list what this tool does not do, at the same length as
     what it does.
   </p>
+  <p>
+    Marks in the "this desk" column describe the <b>desk build</b> — Postgres behind it, separate logins,
+    one shared board. There is also a standalone demo build that runs entirely on one device with no login
+    and no network; it does everything below except texting, card payments, shared data and live updates.
+  </p>
 </div></section>
 
 <section><div class="wrap">
@@ -160,10 +165,18 @@ footer{padding:30px 0 50px;color:var(--mut);font-size:11.5px}
       <tr><td>Payment posting and history</td><td class="us y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td></tr>
       <tr><td>Promise-to-pay tracking</td><td class="us y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="p">~</td><td class="y">✓</td><td class="p">~</td></tr>
       <tr><td>Contact / note log</td><td class="us y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td></tr>
-      <tr><td>Online customer payments</td><td class="us p">~</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td></tr>
-      <tr><td>Outbound text messaging</td><td class="us p">~</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td></tr>
+      <tr><td>Online customer payments</td><td class="us y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td></tr>
+      <tr><td>Outbound text messaging</td><td class="us y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td></tr>
       <tr><td>GPS / starter interrupt</td><td class="us p">~</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td></tr>
       <tr><td>QuickBooks export</td><td class="us y">✓</td><td class="y">✓</td><td class="p">~</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td></tr>
+
+      <tr class="grp"><td colspan="7">Multi-user</td></tr>
+      <tr><td>Separate logins per collector</td><td class="us y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td></tr>
+      <tr><td>Roles — owner sees settings, collectors don't</td><td class="us y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td></tr>
+      <tr><td>One shared board, everyone sees every note</td><td class="us y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td></tr>
+      <tr><td>Live — a note appears on the other phone as it's saved</td><td class="us y">✓</td><td class="n-">–</td><td class="n-">–</td><td class="n-">–</td><td class="p">~</td><td class="n-">–</td></tr>
+      <tr><td>Online payment lands on the board ready to apply</td><td class="us y">✓</td><td class="p">~</td><td class="p">~</td><td class="p">~</td><td class="y">✓</td><td class="p">~</td></tr>
+      <tr><td>Texting blocked server-side on consent and hours</td><td class="us y">✓</td><td class="n-">–</td><td class="n-">–</td><td class="n-">–</td><td class="n-">–</td><td class="n-">–</td></tr>
 
       <tr class="grp"><td colspan="7">Portfolio measurement</td></tr>
       <tr><td>Recency — share paid in last 30 days</td><td class="us y">✓</td><td class="no">–</td><td class="no">–</td><td class="no">–</td><td class="no">–</td><td class="no">–</td></tr>
@@ -285,12 +298,17 @@ footer{padding:30px 0 50px;color:var(--mut);font-size:11.5px}
       ledger. It reads a CSV from whatever DMS is in place and writes one back.</li>
     <li><b>Nothing synchronises.</b> Aging comes in by file, the board goes out by file, and payments are
       entered twice — here and in the DMS.</li>
-    <li><b>Data is per-device.</b> Records live in the browser on one phone or tablet. A second collector on
-      a second device sees a separate board. Sharing one board requires a server, logins and a database.</li>
-    <li><b>It does not send texts or take payments itself.</b> It composes the message and supplies the
-      payment link; the phone sends and the processor collects.</li>
+    <li><b>Card data is deliberately out of reach.</b> Cards are typed on Authorize.net's own hosted page,
+      never in this app. That keeps the dealership out of PCI scope and it is not going to change.</li>
+    <li><b>An online payment is recorded, not auto-applied.</b> The webhook says money arrived; a person
+      taps once to apply it. That is on purpose — a replayed webhook or a partial payment gets a human
+      look before it moves a balance.</li>
+    <li><b>The demo build is per-device.</b> The standalone version keeps everything in one browser with
+      no login and no network. Useful for showing people, not for running a lot with two collectors.</li>
     <li><b>It does not write legal language</b> and does not generate post-repossession notices.</li>
-    <li><b>It does not report to credit bureaus.</b></li>
+    <li><b>It does not report to credit bureaus.</b> The data is all there; the Metro 2 file is not
+      built, because wrong information on a real person's credit file is not a defect you ship and
+      patch later. It needs the current spec and bureau certification.</li>
     <li><b>There is no support line.</b> The vendors above answer the phone during business hours. This has
       no equivalent, and for a lot that depends on its DMS that difference is worth real money.</li>
   </ul></div>
@@ -317,7 +335,7 @@ footer{padding:30px 0 50px;color:var(--mut);font-size:11.5px}
 
 <footer><div class="wrap">
   Let 'Em Ride Autos Inc. · 1507 S Hwy 67, Cedar Hill, TX 75104 · (972) 293-1833<br>
-  Collections Desk v5.4 · specification current as of August 20, 2026
+  Collections Desk v6.2 · specification current as of August 20, 2026
 </div></footer>
 
 </body>
