@@ -167,7 +167,7 @@ footer{padding:30px 0 50px;color:var(--mut);font-size:11.5px}
       <tr><td>Contact / note log</td><td class="us y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td></tr>
       <tr><td>Online customer payments</td><td class="us y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td></tr>
       <tr><td>Outbound text messaging</td><td class="us y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td></tr>
-      <tr><td>GPS / starter interrupt</td><td class="us p">~</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td></tr>
+      <tr><td>GPS / starter interrupt</td><td class="us y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td></tr>
       <tr><td>QuickBooks export</td><td class="us y">✓</td><td class="y">✓</td><td class="p">~</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td></tr>
 
       <tr class="grp"><td colspan="7">Multi-user</td></tr>
@@ -201,6 +201,10 @@ footer{padding:30px 0 50px;color:var(--mut);font-size:11.5px}
       <tr><td>Texas notice merge with cure-date math</td><td class="us y">✓</td><td class="p">~</td><td class="no">–</td><td class="p">~</td><td class="no">–</td><td class="y">✓</td></tr>
       <tr><td>Certified mail tracking on the account</td><td class="us y">✓</td><td class="p">~</td><td class="no">–</td><td class="p">~</td><td class="no">–</td><td class="y">✓</td></tr>
       <tr><td>One-click examination trail export</td><td class="us y">✓</td><td class="no">–</td><td class="no">–</td><td class="no">–</td><td class="no">–</td><td class="y">✓</td></tr>
+
+      <tr><td>Starter interrupt gated on notice, warning and disclosure</td><td class="us y">✓</td><td class="n-">–</td><td class="n-">–</td><td class="n-">–</td><td class="n-">–</td><td class="n-">–</td></tr>
+      <tr><td>Emergency start that no rule can block</td><td class="us y">✓</td><td class="n-">–</td><td class="n-">–</td><td class="n-">–</td><td class="n-">–</td><td class="n-">–</td></tr>
+      <tr><td>Every location lookup logged with who asked</td><td class="us y">✓</td><td class="n-">–</td><td class="n-">–</td><td class="n-">–</td><td class="n-">–</td><td class="n-">–</td></tr>
 
       <tr class="grp"><td colspan="7">Recovery, for a lot that owns its wrecker</td></tr>
       <tr><td>Six-stage recovery pipeline with a clock</td><td class="us y">✓</td><td class="no">–</td><td class="no">–</td><td class="no">–</td><td class="no">–</td><td class="no">–</td></tr>
@@ -278,7 +282,7 @@ footer{padding:30px 0 50px;color:var(--mut);font-size:11.5px}
       repossession — it is moving inventory. The shortfall is measured against re-retail, not auction.</div></div>
 
     <div class="f"><h3>Bilingual scripts</h3>
-      <p>Ten texts and four call scripts written in both languages, auto-selected by how late the account
+      <p>Eleven texts — including a pre-due reminder that goes out before an account is ever late — and four call scripts written in both languages, auto-selected by how late the account
       is, and refused outright when the account can't be texted.</p>
       <div class="why">Most of this lot's customers are Spanish-speaking. The Spanish is written, not
       machine-translated from the English.</div></div>
@@ -296,15 +300,18 @@ footer{padding:30px 0 50px;color:var(--mut);font-size:11.5px}
   <div class="plain"><ul>
     <li><b>It is not a dealer management system.</b> No inventory, deal desking, titles, forms, or general
       ledger. It reads a CSV from whatever DMS is in place and writes one back.</li>
-    <li><b>Nothing synchronises.</b> Aging comes in by file, the board goes out by file, and payments are
-      entered twice — here and in the DMS.</li>
+    <li><b>The DMS never synchronises live.</b> Aging comes in by file — since v6.5 the morning import
+      folds into the board instead of replacing it — the board goes out by file, and payments are
+      entered twice, here and in the DMS.</li>
     <li><b>Card data is deliberately out of reach.</b> Cards are typed on Authorize.net's own hosted page,
       never in this app. That keeps the dealership out of PCI scope and it is not going to change.</li>
     <li><b>An online payment is recorded, not auto-applied.</b> The webhook says money arrived; a person
       taps once to apply it. That is on purpose — a replayed webhook or a partial payment gets a human
       look before it moves a balance.</li>
-    <li><b>The demo build is per-device.</b> The standalone version keeps everything in one browser with
-      no login and no network. Useful for showing people, not for running a lot with two collectors.</li>
+    <li><b>The demo build is per-device, and it neither texts nor takes payments.</b> The standalone
+      version keeps everything in one browser with no login and no network — useful for showing people,
+      not for running a lot with two collectors. The server build on Supabase is where the shared board,
+      logins, Twilio texting, and Authorize.net card payments live.</li>
     <li><b>It does not write legal language</b> and does not generate post-repossession notices.</li>
     <li><b>It does not report to credit bureaus.</b> The data is all there; the Metro 2 file is not
       built, because wrong information on a real person's credit file is not a defect you ship and
@@ -335,7 +342,7 @@ footer{padding:30px 0 50px;color:var(--mut);font-size:11.5px}
 
 <footer><div class="wrap">
   Let 'Em Ride Autos Inc. · 1507 S Hwy 67, Cedar Hill, TX 75104 · (972) 293-1833<br>
-  Collections Desk v6.2 · specification current as of August 20, 2026
+  Collections Desk v6.6 · specification current as of August 21, 2026
 </div></footer>
 
 </body>
